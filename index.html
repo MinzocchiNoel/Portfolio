@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Interattivo</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
-        
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            overflow: hidden; background: #ffffff; /* Sfondo Bianco */
-            font-family: 'Inter', sans-serif; 
+
+        :root {
+            color-scheme: light;
+            background: #f9f9f9;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at top, #ffffff 0%, #f2f2f2 100%);
+            color: #111;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+            text-rendering: optimizeLegibility;
         }
 
         .container {
@@ -17,93 +38,129 @@
             justify-content: center;
             align-items: center;
             perspective: 1000px;
+            overflow: hidden;
+            padding: 0 1rem;
         }
 
         .magnetic-text {
-            display: flex;
+            display: inline-flex;
+            justify-content: center;
             user-select: none;
-            padding: 0 50px;
+            gap: 0.05em;
+            line-height: 0.9;
         }
 
         .letter {
             display: inline-block;
-            font-size: 18vw; /* Dimensione bilanciata */
+            font-size: clamp(6rem, 18vw, 13rem);
             font-weight: 900;
-            line-height: 1.2;
-            letter-spacing: -0.06em;
-            color: #000000; /* Testo Nero Solido */
-            
-            /* Transizione fluida anti-tremolio */
-            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            pointer-events: auto;
+            letter-spacing: -0.05em;
+            color: #111;
             white-space: pre;
-            
-            /* Forza la pulizia dei bordi */
-            overflow: visible;
+            will-change: transform;
+            transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
     </style>
 </head>
 <body>
+    <div class="container" id="hero" role="banner" aria-label="Titolo portfolio interattivo">
+        <h1 class="magnetic-text" id="word">PORTFOLIO</h1>
+    </div>
 
-<div class="container" id="hero">
-    <h1 class="magnetic-text" id="word">PORTFOLIO</h1>
-</div>
+    <p class="sr-only">Questo header usa JavaScript per un effetto magnetico sui caratteri del titolo.</p>
 
-<script>
-    const word = document.getElementById('word');
-    const textContent = "PORTFOLIO";
-    word.innerHTML = '';
+    <script>
+        const word = document.getElementById('word');
+        const textContent = 'PORTFOLIO';
+        const letters = [];
+        let pointerX = 0;
+        let pointerY = 0;
+        let rafId = null;
 
-    // Creazione dinamica delle lettere per l'interazione individuale
-    const letters = textContent.split('').map(char => {
-        const span = document.createElement('span');
-        span.innerText = char;
-        span.className = 'letter';
-        word.appendChild(span);
-        return span;
-    });
+        word.textContent = '';
 
-    document.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
+        for (const char of textContent) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'letter';
+            word.appendChild(span);
+            letters.push(span);
+        }
 
-        letters.forEach(letter => {
-            const rect = letter.getBoundingClientRect();
-            const letterX = rect.left + rect.width / 2;
-            const letterY = rect.top + rect.height / 2;
+        const hero = document.getElementById('hero');
 
-            const distX = mouseX - letterX;
-            const distY = mouseY - letterY;
-            const distance = Math.sqrt(distX * distX + distY * distY);
+        function resetLetters() {
+            letters.forEach(letter => {
+                letter.style.transform = 'translate3d(0, 0, 0) rotateZ(0deg) scale(1)';
+            });
+        }
 
-            // Raggio di attrazione/repulsione delle lettere
-            const radius = 200;
+        function updateLetters() {
+            const radius = Math.max(120, Math.min(window.innerWidth * 0.25, 220));
 
-            if (distance < radius) {
+            letters.forEach(letter => {
+                const rect = letter.getBoundingClientRect();
+                const letterX = rect.left + rect.width / 2;
+                const letterY = rect.top + rect.height / 2;
+                const distX = pointerX - letterX;
+                const distY = pointerY - letterY;
+                let distance = Math.sqrt(distX * distX + distY * distY);
+
+                if (distance > radius) {
+                    letter.style.transform = 'translate3d(0, 0, 0) rotateZ(0deg) scale(1)';
+                    return;
+                }
+
+                if (distance < 1) distance = 1;
                 const force = (radius - distance) / radius;
-                
-                // Spostamento X e Y
-                const moveX = (distX / distance) * force * -45;
-                const moveY = (distY / distance) * force * -45;
-                
-                // Rotazione per un effetto più organico
-                const rotZ = (distX / radius) * 12;
+                const moveX = (distX / distance) * force * -42;
+                const moveY = (distY / distance) * force * -42;
+                const rotZ = (distX / radius) * 10;
 
                 letter.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateZ(${rotZ}deg) scale(${1 + force * 0.05})`;
-            } else {
-                // Ritorno alla posizione di riposo
-                letter.style.transform = `translate3d(0, 0, 0) rotateZ(0deg) scale(1)`;
+            });
+            rafId = null;
+        }
+
+        function scheduleUpdate() {
+            if (rafId === null) {
+                rafId = requestAnimationFrame(updateLetters);
+            }
+        }
+
+        hero.addEventListener('pointermove', event => {
+            pointerX = event.clientX;
+            pointerY = event.clientY;
+            scheduleUpdate();
+        });
+
+        hero.addEventListener('pointerleave', resetLetters);
+
+        hero.addEventListener('touchmove', event => {
+            if (event.touches.length) {
+                pointerX = event.touches[0].clientX;
+                pointerY = event.touches[0].clientY;
+                scheduleUpdate();
+            }
+        }, { passive: true });
+
+        window.addEventListener('resize', resetLetters);
+        window.addEventListener('mouseout', event => {
+            if (!event.relatedTarget) {
+                resetLetters();
             }
         });
-    });
-
-    // Reset quando il mouse esce dall'area visibile
-    document.addEventListener('mouseleave', () => {
-        letters.forEach(letter => {
-            letter.style.transform = `translate3d(0, 0, 0) rotateZ(0deg) scale(1)`;
-        });
-    });
-</script>
-
+    </script>
 </body>
 </html>
