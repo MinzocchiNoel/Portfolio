@@ -110,6 +110,18 @@
             text-transform: uppercase;
         }
 
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .letter {
             display: inline-block;
             font-size: clamp(6rem, 14vw, 11.5rem);
@@ -200,7 +212,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem 1.6rem;
+            padding: 1rem 1.2rem;
             border-radius: 999px;
             border: none;
             background: #1d3b8a;
@@ -208,6 +220,14 @@
             font-weight: 700;
             text-decoration: none;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            min-width: 56px;
+            min-height: 56px;
+        }
+
+        .contact-button svg {
+            width: 1.05rem;
+            height: 1.05rem;
+            fill: currentColor;
         }
 
         .contact-button:hover,
@@ -250,7 +270,7 @@
 
     <main>
         <section class="hero" id="hero" aria-label="Presentazione portfolio">
-            <div class="hero-content">
+            <div class="hero-content reveal">
                 <div class="magnetic-text" id="word">PORTFOLIO</div>
                 <div class="hero-copy">
                     <p class="hero-summary">Fotografia e video per raccontare storie visive autentiche. Il mio lavoro è costruire immagini con cura del dettaglio, ritmo e sensibilità narrativa.</p>
@@ -258,7 +278,7 @@
             </div>
         </section>
 
-        <section class="section" id="about">
+        <section class="section reveal" id="about">
             <h2 class="section-title">Chi sono</h2>
             <div class="about-grid">
                 <div class="about-text">
@@ -286,11 +306,13 @@
             </div>
         </section>
 
-        <section class="section" id="contact">
+        <section class="section reveal" id="contact">
             <div class="contact-panel">
                 <h2>Se cerchi fotografia o video, scrivimi.</h2>
                 <p>Realizzo servizi fotografici e video che mettono in luce il tuo progetto, il tuo brand o le tue idee. Contattami per parlare di lavori, collaborazioni o richieste creative.</p>
-                <a class="contact-button" href="mailto:noel.minzo@gmail.com">noel.minzo@gmail.com</a>
+                <a class="contact-button" href="mailto:noel.minzo@gmail.com" aria-label="Invia email a Noel">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.75 6.5C2.75 5.121 3.871 4 5.25 4h13.5c1.379 0 2.5 1.121 2.5 2.5v11c0 1.379-1.121 2.5-2.5 2.5H5.25C3.871 20 2.75 18.879 2.75 17.5v-11Zm1.5.29v10.71c0 .552.448 1 1 1h13.5a1 1 0 0 0 1-1V6.79l-7.357 4.678a1.25 1.25 0 0 1-1.286 0L4.25 6.79Zm1.1-.735 5.605 3.565 5.605-3.565H5.85Z"/></svg>
+                </a>
             </div>
         </section>
     </main>
@@ -378,6 +400,20 @@
                 resetLetters();
             }
         });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+
+        revealElements.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
