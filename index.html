@@ -77,12 +77,13 @@
             display: grid;
             place-items: center;
             padding: 5rem 0 3rem;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.98) 0%, rgba(226, 234, 255, 0.25) 48%, rgba(244,245,248,1) 100%);
         }
 
         .hero-content {
             width: 100%;
             display: grid;
-            gap: 2rem;
+            gap: 1.5rem;
             text-align: center;
         }
 
@@ -92,11 +93,11 @@
         }
 
         .hero-summary {
-            font-size: clamp(1rem, 1.05vw, 1.2rem);
-            color: var(--muted);
+            font-size: clamp(1rem, 1.1vw, 1.3rem);
+            color: rgba(17, 17, 17, 0.78);
             margin: 0 auto;
-            max-width: 680px;
-            line-height: 1.75;
+            max-width: 700px;
+            line-height: 1.9;
         }
 
         .magnetic-text {
@@ -106,6 +107,18 @@
             gap: 0.05em;
             line-height: 0.85;
             justify-items: center;
+            text-transform: uppercase;
+        }
+
+        .letter {
+            display: inline-block;
+            font-size: clamp(6rem, 14vw, 11.5rem);
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            color: #101025;
+            white-space: pre;
+            will-change: transform;
+            transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .about-grid {
@@ -114,9 +127,9 @@
         }
 
         .about-text {
-            color: var(--muted);
+            color: rgba(17, 17, 17, 0.84);
             max-width: 760px;
-            line-height: 1.8;
+            line-height: 1.85;
         }
 
         .about-list {
@@ -128,8 +141,9 @@
             background: var(--surface);
             border-radius: 24px;
             box-shadow: var(--shadow);
-            padding: 1.4rem;
+            padding: 1.6rem;
             border: 1px solid rgba(15, 23, 42, 0.06);
+            color: rgba(17, 17, 17, 0.88);
         }
 
         .about-card h3 {
@@ -139,32 +153,14 @@
 
         .about-card p {
             margin: 0;
-            color: var(--muted);
+            color: rgba(17, 17, 17, 0.76);
         }
 
         .about-footer {
             padding: 1.5rem 0 0;
             border-top: 1px solid rgba(15, 23, 42, 0.08);
-            color: var(--muted);
+            color: rgba(17, 17, 17, 0.78);
             max-width: 760px;
-        }
-
-        .letter {
-            display: inline-block;
-            font-size: clamp(6rem, 14vw, 12rem);
-            font-weight: 900;
-            letter-spacing: -0.06em;
-            color: var(--accent);
-            white-space: pre;
-            will-change: transform;
-            transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .subtitle {
-            font-size: clamp(1rem, 1.1vw, 1.2rem);
-            color: var(--muted);
-            margin: 0 auto;
-            max-width: 680px;
         }
 
         .section {
@@ -178,68 +174,54 @@
             margin: 0;
         }
 
-        .cards {
+        .contact-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            gap: 1.25rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 32px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+            padding: 2rem;
         }
 
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.7rem;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .card:hover,
-        .card:focus-within {
-            transform: translateY(-6px);
-            box-shadow: 0 40px 110px rgba(15, 23, 42, 0.12);
-        }
-
-        .card-title {
-            margin: 0 0 0.9rem;
-            font-size: 1.25rem;
-        }
-
-        .card-text {
+        .contact-panel h2 {
             margin: 0;
-            color: var(--muted);
+            font-size: clamp(2rem, 2.5vw, 2.5rem);
         }
 
-        .cta-grid {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 1rem;
-            align-items: center;
+        .contact-panel p {
+            margin: 0;
+            color: rgba(17, 17, 17, 0.78);
+            max-width: 680px;
+            line-height: 1.8;
         }
 
-        .cta-button {
+        .contact-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.95rem 1.4rem;
+            padding: 1rem 1.6rem;
             border-radius: 999px;
             border: none;
-            background: var(--accent-soft);
+            background: #1d3b8a;
             color: #fff;
             font-weight: 700;
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
 
-        .cta-button:hover,
-        .cta-button:focus-visible {
+        .contact-button:hover,
+        .contact-button:focus-visible {
             transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(58, 108, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(29, 59, 138, 0.22);
+            background: #162f74;
         }
 
         .footer {
             padding: 1.5rem 0 2rem;
             display: flex;
             justify-content: center;
-            color: var(--muted);
+            color: rgba(85, 85, 85, 0.9);
             font-size: 0.95rem;
         }
 
@@ -248,8 +230,12 @@
                 justify-content: center;
             }
 
-            .cta-grid {
-                grid-template-columns: 1fr;
+            .contact-panel {
+                padding: 1.5rem;
+            }
+
+            .about-grid {
+                gap: 1.5rem;
             }
         }
     </style>
@@ -258,7 +244,6 @@
     <header>
         <div class="topbar">
             <a class="nav-link" href="#about">Chi sono</a>
-            <a class="nav-link" href="#projects">Progetti</a>
             <a class="nav-link" href="#contact">Contatti</a>
         </div>
     </header>
@@ -268,7 +253,7 @@
             <div class="hero-content">
                 <div class="magnetic-text" id="word">PORTFOLIO</div>
                 <div class="hero-copy">
-                    <p class="hero-summary">Video, fotografia e web design uniti in un’esperienza visiva curata. Questo spazio è pensato per presentare il tuo lavoro con chiarezza, stile e attenzione al dettaglio.</p>
+                    <p class="hero-summary">Fotografia e video per raccontare storie visive autentiche. Il mio lavoro è costruire immagini con cura del dettaglio, ritmo e sensibilità narrativa.</p>
                 </div>
             </div>
         </section>
@@ -283,54 +268,34 @@
                 <div class="about-list">
                     <article class="about-card">
                         <h3>Video Making & Editing</h3>
-                        <p>Dal frame all’editing, sviluppo storie e atmosfere che parlano di emozioni. Ogni progetto ha ritmo, cura del dettaglio e un flusso visivo coerente.</p>
+                        <p>Dal frame al montaggio, creo contenuti che raccontano storie con ritmo, atmosfera e attenzione al dettaglio.</p>
                     </article>
                     <article class="about-card">
                         <h3>Fotografia</h3>
-                        <p>Cerco prospettive uniche tra luce naturale, geometrie e momenti spontanei, trasformando gli attimi in immagini che raccontano.</p>
+                        <p>Cerco prospettive genuine tra luce naturale, architettura e momenti spontanei, trasformando l’attimo in immagini che restano.</p>
                     </article>
                     <article class="about-card">
-                        <h3>Sviluppo Web & Design</h3>
-                        <p>Credo che il contenuto visivo meriti il giusto palcoscenico digitale. Realizzo pagine pulite e moderne per un’esperienza fluida e d’impatto.</p>
+                        <h3>Spazio digitale</h3>
+                        <p>Curo personalmente questo sito per dare al mio lavoro visivo una cornice pulita, moderna e intuitiva.</p>
                     </article>
                 </div>
             </div>
             <div class="about-footer">
                 <h3>La mia filosofia</h3>
-                <p>Non mi accontento di soluzioni standard: curo ogni pixel, ogni riflesso, ogni transizione. Sono sempre in evoluzione, pronto a imparare nuove tecniche e ad ascoltare il progetto giusto.</p>
-            </div>
-        </section>
-
-        <section class="section" id="projects">
-            <h2 class="section-title">Progetti recenti</h2>
-            <div class="cards">
-                <article class="card">
-                    <h3 class="card-title">Landing page interattiva</h3>
-                    <p class="card-text">Layout moderno con animazioni leggere, responsive su tutti i dispositivi e attenzione alla leggibilità.</p>
-                </article>
-                <article class="card">
-                    <h3 class="card-title">Blog personale</h3>
-                    <p class="card-text">Struttura pulita per contenuti editoriali, navigazione semplice e caricamento veloce.</p>
-                </article>
-                <article class="card">
-                    <h3 class="card-title">Portfolio progetti</h3>
-                    <p class="card-text">Mostra le tue realizzazioni con una galleria elegante e una descrizione chiara per ogni progetto.</p>
-                </article>
+                <p>Non mi accontento di soluzioni standard: curo ogni pixel, ogni riflesso, ogni transizione. Sono sempre in evoluzione, pronto a imparare nuove tecniche e a dare valore al progetto giusto.</p>
             </div>
         </section>
 
         <section class="section" id="contact">
-            <div class="cta-grid">
-                <div>
-                    <h2 class="section-title">Vuoi lavorare insieme?</h2>
-                    <p>Se ti piace questo stile, possiamo trasformarlo in un sito su misura per te: una homepage, pagine progetto e una sezione contatti funzionante.</p>
-                </div>
-                <a class="cta-button" href="mailto:noel@example.com">Scrivimi</a>
+            <div class="contact-panel">
+                <h2>Se cerchi fotografia o video, scrivimi.</h2>
+                <p>Realizzo servizi fotografici e video che mettono in luce il tuo progetto, il tuo brand o le tue idee. Contattami per parlare di lavori, collaborazioni o richieste creative.</p>
+                <a class="contact-button" href="mailto:noel.minzo@gmail.com">noel.minzo@gmail.com</a>
             </div>
         </section>
     </main>
 
-    <footer class="footer">Progetto portfolio essenziale — realizzato con HTML, CSS e JavaScript.</footer>
+    <footer class="footer">Portfolio personale — fotografia e video.</footer>
 
     <script>
         const word = document.getElementById('word');
