@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavori - Noel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
+
+        :root {
+            --bg: #f4f5f8;
+            --surface: rgba(255, 255, 255, 0.95);
+            --text: #111;
+            --muted: #5d5d5d;
+            --accent: #1d1d1f;
+            --accent-soft: #3a6cff;
+            --radius: 28px;
+            --shadow: 0 32px 90px rgba(15, 23, 42, 0.08);
+            color-scheme: light;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: radial-gradient(circle at top, #ffffff 0%, #e8ecf8 55%, #f4f5f8 100%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .topbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            color: var(--accent-soft);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 4rem;
+        }
+
+        .hero {
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            margin: 0;
+            letter-spacing: -0.06em;
+        }
+
+        .hero-summary {
+            margin: 1.5rem auto 0;
+            max-width: 720px;
+            color: rgba(17, 17, 17, 0.78);
+            line-height: 1.8;
+            font-size: clamp(1rem, 1.1vw, 1.25rem);
+        }
+
+        .section {
+            display: grid;
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 3vw, 3rem);
+            margin: 0;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .work-card {
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 1.7rem;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .work-card:hover,
+        .work-card:focus-within {
+            transform: translateY(-6px);
+            box-shadow: 0 40px 110px rgba(15, 23, 42, 0.12);
+        }
+
+        .work-card h3 {
+            margin: 0 0 0.85rem;
+            font-size: 1.2rem;
+        }
+
+        .work-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .work-meta {
+            margin-top: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            color: rgba(85, 85, 85, 0.85);
+            font-size: 0.95rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-soft);
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+
+        .work-card::before {
+            content: '';
+            display: block;
+            width: 56px;
+            height: 4px;
+            background: linear-gradient(90deg, #1d3b8a, #3a6cff);
+            border-radius: 999px;
+            margin-bottom: 1.2rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="index.html#contact">Contatti</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero reveal">
+            <h1 class="hero-title">Lavori</h1>
+            <p class="hero-summary">Una selezione di progetti fotografici e video realizzati con attenzione alle emozioni, alla luce e alle atmosfere. Ogni lavoro racconta un’esperienza visiva diversa.</p>
+        </section>
+
+        <section class="section reveal">
+            <h2 class="section-title">Progetti</h2>
+            <div class="work-grid">
+                <article class="work-card">
+                    <h3>Palatiritus 2026</h3>
+                    <p>Servizio video documentario con color grading cinematografico, atmosfera notturna e montaggio ritmico per valorizzare l’evento.</p>
+                    <div class="work-meta">Video | Storytelling | Color grading</div>
+                </article>
+                <article class="work-card">
+                    <h3>Ritratti urbani</h3>
+                    <p>Sessione fotografica in città con attenzione alla luce naturale, alle geometrie architetturali e ai dettagli di ambiente.</p>
+                    <div class="work-meta">Fotografia | Luce naturale | Ritratto</div>
+                </article>
+                <article class="work-card">
+                    <h3>Video promozionale</h3>
+                    <p>Progetto di video promozionale per brand, con storyboard curato e montaggio dinamico per comunicare stile e personalità.</p>
+                    <div class="work-meta">Video | Brand | Montaggio</div>
+                </article>
+            </div>
+        </section>
+
+        <a class="back-link reveal" href="index.html">← Torna alla home</a>
+    </main>
+
+    <script>
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
