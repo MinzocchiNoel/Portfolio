@@ -3,82 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Interattivo</title>
+    <title>Portfolio - Noel</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
 
         :root {
+            --bg: #f4f5f8;
+            --surface: rgba(255, 255, 255, 0.92);
+            --text: #111;
+            --muted: #555;
+            --accent: #1d1d1f;
+            --accent-soft: #3a6cff;
+            --radius: 28px;
+            --shadow: 0 32px 90px rgba(15, 23, 42, 0.08);
             color-scheme: light;
-            background: #f9f9f9;
         }
 
         *, *::before, *::after {
             box-sizing: border-box;
         }
 
-        html, body {
-            margin: 0;
-            min-height: 100%;
-            overflow: hidden;
-            background: radial-gradient(circle at top, #ffffff 0%, #f2f2f2 100%);
-            color: #111;
-            font-family: 'Inter', sans-serif;
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            display: grid;
-            place-items: center;
-            text-rendering: optimizeLegibility;
+            margin: 0;
+            min-height: 100%;
+            background: radial-gradient(circle at top, #ffffff 0%, #e8ecf8 55%, #f4f5f8 100%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
         }
 
-        .container {
-            width: 100vw;
-            height: 100vh;
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .topbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            color: var(--accent-soft);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 5rem 0 3rem;
+        }
+
+        .hero-content {
+            width: 100%;
+            display: grid;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .hero-copy {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
             align-items: center;
-            perspective: 1000px;
-            overflow: hidden;
-            padding: 0 1rem;
+            gap: 0.5rem;
+            color: var(--accent-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.75rem;
+            font-weight: 700;
         }
 
         .magnetic-text {
             display: inline-flex;
             justify-content: center;
-            user-select: none;
+            flex-wrap: wrap;
             gap: 0.05em;
-            line-height: 0.9;
+            line-height: 0.85;
+            justify-items: center;
         }
 
         .letter {
             display: inline-block;
-            font-size: clamp(6rem, 18vw, 13rem);
+            font-size: clamp(6rem, 14vw, 12rem);
             font-weight: 900;
-            letter-spacing: -0.05em;
-            color: #111;
+            letter-spacing: -0.06em;
+            color: var(--accent);
             white-space: pre;
             will-change: transform;
             transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+        .subtitle {
+            font-size: clamp(1rem, 1.1vw, 1.2rem);
+            color: var(--muted);
+            margin: 0 auto;
+            max-width: 680px;
+        }
+
+        .section {
+            display: grid;
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 3vw, 3rem);
+            margin: 0;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.7rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover,
+        .card:focus-within {
+            transform: translateY(-6px);
+            box-shadow: 0 40px 110px rgba(15, 23, 42, 0.12);
+        }
+
+        .card-title {
+            margin: 0 0 0.9rem;
+            font-size: 1.25rem;
+        }
+
+        .card-text {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .cta-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.95rem 1.4rem;
+            border-radius: 999px;
+            border: none;
+            background: var(--accent-soft);
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-button:hover,
+        .cta-button:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 35px rgba(58, 108, 255, 0.2);
+        }
+
+        .footer {
+            padding: 1.5rem 0 2rem;
+            display: flex;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                justify-content: center;
+            }
+
+            .cta-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="hero" role="banner" aria-label="Titolo portfolio interattivo">
-        <h1 class="magnetic-text" id="word">PORTFOLIO</h1>
-    </div>
+    <header>
+        <div class="topbar">
+            <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#projects">Progetti</a>
+            <a class="nav-link" href="#contact">Contatti</a>
+        </div>
+    </header>
 
-    <p class="sr-only">Questo header usa JavaScript per un effetto magnetico sui caratteri del titolo.</p>
+    <main>
+        <section class="hero" id="hero" aria-label="Presentazione portfolio">
+            <div class="hero-content">
+                <p class="eyebrow">Portfolio personale</p>
+                <div class="magnetic-text" id="word">PORTFOLIO</div>
+                <div class="hero-copy">
+                    <p class="subtitle">Questo è un esempio di homepage portfolio. Qui puoi mostrare il tuo lavoro, i tuoi progetti e la tua esperienza in modo semplice, moderno e reattivo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <h2 class="section-title">Chi sono</h2>
+            <p>Mi chiamo Noel e creo esperienze digitali focalizzate su design pulito, performance e accessibilità. Nel mio portfolio trovi progetti realizzati con HTML, CSS e JavaScript pensati per essere efficienti su desktop e mobile.</p>
+        </section>
+
+        <section class="section" id="projects">
+            <h2 class="section-title">Progetti recenti</h2>
+            <div class="cards">
+                <article class="card">
+                    <h3 class="card-title">Landing page interattiva</h3>
+                    <p class="card-text">Layout moderno con animazioni leggere, responsive su tutti i dispositivi e attenzione alla leggibilità.</p>
+                </article>
+                <article class="card">
+                    <h3 class="card-title">Blog personale</h3>
+                    <p class="card-text">Struttura pulita per contenuti editoriali, navigazione semplice e caricamento veloce.</p>
+                </article>
+                <article class="card">
+                    <h3 class="card-title">Portfolio progetti</h3>
+                    <p class="card-text">Mostra le tue realizzazioni con una galleria elegante e una descrizione chiara per ogni progetto.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <div class="cta-grid">
+                <div>
+                    <h2 class="section-title">Vuoi lavorare insieme?</h2>
+                    <p>Se ti piace questo stile, possiamo trasformarlo in un sito su misura per te: una homepage, pagine progetto e una sezione contatti funzionante.</p>
+                </div>
+                <a class="cta-button" href="mailto:noel@example.com">Scrivimi</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">Progetto portfolio essenziale — realizzato con HTML, CSS e JavaScript.</footer>
 
     <script>
         const word = document.getElementById('word');
@@ -124,9 +316,9 @@
 
                 if (distance < 1) distance = 1;
                 const force = (radius - distance) / radius;
-                const moveX = (distX / distance) * force * -42;
-                const moveY = (distY / distance) * force * -42;
-                const rotZ = (distX / radius) * 10;
+                const moveX = (distX / distance) * force * -40;
+                const moveY = (distY / distance) * force * -40;
+                const rotZ = (distX / radius) * 9;
 
                 letter.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateZ(${rotZ}deg) scale(${1 + force * 0.05})`;
             });
