@@ -411,9 +411,18 @@
 
         function updateHeroScroll() {
             const scrollY = window.scrollY;
-            const offset = Math.min(scrollY, 260);
-            heroText.style.transform = `translate3d(0, ${offset * 0.28}px, 0)`;
-            heroText.style.opacity = `${Math.max(0.35, 1 - offset / 400)}`;
+            const progress = Math.min(scrollY / 500, 1);
+            
+            const scale = 1 - progress * 0.15;
+            const blur = progress * 6;
+            const letterSpacing = -0.06 + progress * 0.08;
+            const opacity = Math.max(0.4, 1 - progress * 0.6);
+            
+            heroText.style.transform = `scale(${scale})`;
+            heroText.style.filter = `blur(${blur}px)`;
+            heroText.style.letterSpacing = `${letterSpacing}em`;
+            heroText.style.opacity = opacity;
+            
             ticking = false;
         }
 
