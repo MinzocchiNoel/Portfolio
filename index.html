@@ -49,6 +49,12 @@
             background: rgba(15, 20, 32, 0.85);
             border-bottom: 1px solid rgba(201, 174, 133, 0.1);
             box-shadow: 0 12px 32px rgba(107, 141, 217, 0.08);
+            transform: translateY(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        header.hidden {
+            transform: translateY(-100%);
         }
 
         .topbar {
@@ -174,7 +180,7 @@
             text-align: center;
             position: relative;
             z-index: 1;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .hero-copy {
@@ -292,8 +298,6 @@
             line-height: 0.85;
             justify-items: center;
             text-transform: uppercase;
-            overflow: hidden;
-            border-radius: 32px;
         }
 
         .reveal {
@@ -682,6 +686,7 @@
         let pointerX = 0;
         let pointerY = 0;
         let rafId = null;
+        let lastScrollTop = 0;
 
         word.textContent = '';
 
@@ -768,7 +773,35 @@
                 ticking = true;
                 requestAnimationFrame(updateHeroScroll);
             }
+            
+            // Header hide/show logic
+            const header = document.querySelector('header');
+            const currentScroll = window.scrollY;
+            
+            if (currentScroll > lastScrollTop + 50) {
+                // Scrolling down - hide header
+                header.classList.add('hidden');
+            } else if (currentScroll < lastScrollTop - 30) {
+                // Scrolling up - show header
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollTop = Math.max(0, currentScroll);
         });
+
+        // Reveal header when pointer is dragged to top of viewport
+        document.addEventListener('pointermove', e => {
+            if (e.clientY !== undefined && e.clientY <= 60) {
+                document.querySelector('header').classList.remove('hidden');
+            }
+        });
+
+        // For touch devices: listen for touchstart near top
+        document.addEventListener('touchstart', e => {
+            if (e.touches && e.touches[0] && e.touches[0].clientY <= 60) {
+                document.querySelector('header').classList.remove('hidden');
+            }
+        }, { passive: true });
 
         hero.addEventListener('pointermove', event => {
             pointerX = event.clientX;
