@@ -14,7 +14,9 @@
             --text: #ffffff;
             --muted: #b4b9c8;
             --accent: #c9ae85;
-            --accent-alt: #8b9dc3;
+            --accent-alt: #6b8dd9;
+            --accent-alt-light: #a8b8e8;
+            --accent-alt-dark: #4a5fa0;
             --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             color-scheme: dark;
         }
@@ -30,7 +32,9 @@
         body {
             margin: 0;
             min-height: 100%;
-            background: linear-gradient(135deg, #0f1420 0%, #1a1f35 50%, #151d2f 100%);
+            background: linear-gradient(135deg, #0f1420 0%, #1a1f35 50%, #151d2f 100%),
+                        radial-gradient(circle at 0% 0%, rgba(107, 141, 217, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 100% 100%, rgba(201, 174, 133, 0.04) 0%, transparent 50%);
             color: var(--text);
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
@@ -42,8 +46,9 @@
             top: 0;
             z-index: 10;
             backdrop-filter: blur(24px);
-            background: rgba(15, 20, 32, 0.7);
+            background: rgba(15, 20, 32, 0.85);
             border-bottom: 1px solid rgba(201, 174, 133, 0.1);
+            box-shadow: 0 12px 32px rgba(107, 141, 217, 0.08);
         }
 
         .topbar {
@@ -59,10 +64,17 @@
             font-weight: 900;
             font-size: 1.1rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #c9ae85, #8b9dc3);
+            background: linear-gradient(135deg, #c9ae85, #6b8dd9, #a8b8e8);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradient-shift 6s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .nav-links {
@@ -85,13 +97,20 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #c9ae85, #8b9dc3);
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, #c9ae85, #6b8dd9);
+            box-shadow: 0 0 8px rgba(107, 141, 217, 0.4);
+            transition: width 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+            box-shadow: 0 0 12px rgba(107, 141, 217, 0.6);
         }
 
         .nav-link:hover,
         .nav-link:focus-visible {
             color: var(--text);
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-link:hover::after {
@@ -120,10 +139,12 @@
             right: -20%;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(201, 174, 133, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(201, 174, 133, 0.12) 0%, rgba(201, 174, 133, 0.03) 50%, transparent 70%);
+            filter: blur(40px);
             border-radius: 50%;
             z-index: 0;
             pointer-events: none;
+            animation: float 8s ease-in-out infinite;
         }
 
         .hero::after {
@@ -133,10 +154,17 @@
             left: -20%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(139, 157, 195, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(107, 141, 217, 0.15) 0%, rgba(107, 141, 217, 0.04) 50%, transparent 70%);
+            filter: blur(50px);
             border-radius: 50%;
             z-index: 0;
             pointer-events: none;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
         }
 
         .hero-content {
@@ -181,31 +209,79 @@
             border: none;
             font-weight: 700;
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 1rem;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-button::after,
+        .contact-button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
         .hero-button {
             background: linear-gradient(135deg, #c9ae85, #dfc4a0);
             color: #0f1420;
-            box-shadow: 0 12px 32px rgba(201, 174, 133, 0.2);
+            box-shadow: 0 12px 32px rgba(201, 174, 133, 0.25), 0 0 24px rgba(201, 174, 133, 0.15);
+        }
+        
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(201, 174, 133, 0.4), rgba(107, 141, 217, 0.1));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .hero-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 48px rgba(201, 174, 133, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 48px rgba(201, 174, 133, 0.4), 0 0 32px rgba(201, 174, 133, 0.25);
+        }
+        
+        .hero-button:hover::before {
+            opacity: 1;
+        }
+        
+        .hero-button:active {
+            transform: translateY(-1px);
         }
 
         .contact-button {
-            background: linear-gradient(135deg, #8b9dc3, #a8b8d8);
+            background: linear-gradient(135deg, #6b8dd9, #a8b8e8);
             color: #0f1420;
-            box-shadow: 0 12px 32px rgba(139, 157, 195, 0.2);
+            box-shadow: 0 12px 32px rgba(107, 141, 217, 0.3), 0 0 24px rgba(107, 141, 217, 0.2);
+            position: relative;
+        }
+        
+        .contact-button::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(107, 141, 217, 0.4), rgba(201, 174, 133, 0.1));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .contact-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 48px rgba(139, 157, 195, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 48px rgba(107, 141, 217, 0.45), 0 0 32px rgba(107, 141, 217, 0.3);
+        }
+        
+        .contact-button:hover::before {
+            opacity: 1;
         }
 
         .magnetic-text {
@@ -216,6 +292,8 @@
             line-height: 0.85;
             justify-items: center;
             text-transform: uppercase;
+            overflow: hidden;
+            border-radius: 32px;
         }
 
         .reveal {
@@ -235,14 +313,17 @@
             font-size: clamp(6rem, 14vw, 11.5rem);
             font-weight: 900;
             letter-spacing: -0.06em;
-            background: linear-gradient(135deg, #c9ae85, #8b9dc3, #c9ae85);
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, #c9ae85, #6b8dd9, #a8b8e8, #c9ae85);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             white-space: pre;
-            will-change: transform;
+            will-change: transform, filter;
             transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: drop-shadow(0 0 8px rgba(107, 141, 217, 0.1));
+            text-shadow: 0 0 0 rgba(107, 141, 217, 0);
+            position: relative;
         }
 
         .section {
@@ -250,6 +331,16 @@
             gap: 2.5rem;
             padding: 5rem 0;
             position: relative;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .section:nth-child(even) {
@@ -266,6 +357,19 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.02em;
+            animation: titleReveal 0.8s ease forwards;
+        }
+        
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .about-grid {
@@ -277,11 +381,35 @@
             color: var(--muted);
             max-width: 760px;
             line-height: 1.9;
+            animation: slideInLeft 0.8s ease 0.1s both;
         }
-
+        
         .about-list {
             display: grid;
             gap: 1.5rem;
+            animation: slideInRight 0.8s ease 0.2s both;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .about-card {
@@ -302,7 +430,8 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #c9ae85, #8b9dc3);
+            background: linear-gradient(90deg, #c9ae85, #6b8dd9, #a8b8e8);
+            box-shadow: 0 0 16px rgba(107, 141, 217, 0.4);
         }
 
         .about-card:hover {
@@ -314,6 +443,11 @@
             margin: 0 0 0.85rem;
             font-size: 1.15rem;
             color: var(--text);
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .about-card:hover h3 {
+            color: var(--accent);
         }
 
         .about-card p {
@@ -324,10 +458,12 @@
 
         .about-footer {
             padding: 2rem;
-            background: var(--surface-light);
-            border: 1px solid rgba(201, 174, 133, 0.1);
+            background: linear-gradient(135deg, rgba(26, 38, 64, 0.6) 0%, rgba(26, 38, 64, 0.3) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(107, 141, 217, 0.25);
             border-radius: 16px;
             max-width: 760px;
+            box-shadow: 0 8px 24px rgba(107, 141, 217, 0.1);
         }
 
         .about-footer h3 {
@@ -344,15 +480,16 @@
         .contact-panel {
             display: grid;
             gap: 2rem;
-            background: var(--surface-light);
+            background: linear-gradient(135deg, rgba(26, 38, 64, 0.7) 0%, rgba(26, 38, 64, 0.4) 100%);
+            backdrop-filter: blur(16px);
             border-radius: 20px;
-            border: 1px solid rgba(201, 174, 133, 0.2);
+            border: 1px solid rgba(107, 141, 217, 0.3);
             padding: 3rem;
             justify-items: center;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 24px 64px rgba(139, 157, 195, 0.1);
+            box-shadow: 0 24px 64px rgba(107, 141, 217, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .contact-panel::before {
@@ -362,10 +499,27 @@
             right: -50%;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(139, 157, 195, 0.12) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(107, 141, 217, 0.2) 0%, rgba(107, 141, 217, 0.05) 50%, transparent 70%);
+            filter: blur(50px);
             border-radius: 50%;
             z-index: 0;
             pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .contact-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -30%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(201, 174, 133, 0.15) 0%, rgba(201, 174, 133, 0.03) 50%, transparent 70%);
+            filter: blur(50px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 10s ease-in-out infinite reverse;
         }
 
         .contact-panel h2 {
@@ -377,6 +531,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.01em;
         }
 
         .contact-panel p {
@@ -400,12 +555,26 @@
         }
 
         .footer {
-            padding: 2rem 0;
+            padding: 3rem 0 2rem;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            gap: 1rem;
             color: var(--muted);
             font-size: 0.95rem;
             border-top: 1px solid rgba(201, 174, 133, 0.1);
+            background: linear-gradient(180deg, rgba(26, 38, 64, 0.2) 0%, rgba(15, 20, 32, 0.4) 100%);
+        }
+        
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .footer a:hover {
+            color: var(--accent-alt-light);
         }
 
         @media (max-width: 768px) {
@@ -431,6 +600,14 @@
             .contact-button {
                 width: 100%;
             }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -454,10 +631,6 @@
                     <p class="hero-summary">Fotografia e video per raccontare storie visive autentiche. Il mio lavoro è costruire immagini con cura del dettaglio, ritmo e sensibilità narrativa.</p>
                     <div class="hero-buttons">
                         <a class="hero-button" href="lavori.html">Guarda i miei lavori</a>
-                        <a class="hero-button contact-button" href="mailto:noel.minzo@gmail.com" aria-label="Invia email">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.75 6.5C2.75 5.121 3.871 4 5.25 4h13.5c1.379 0 2.5 1.121 2.5 2.5v11c0 1.379-1.121 2.5-2.5 2.5H5.25C3.871 20 2.75 18.879 2.75 17.5v-11Zm1.5.29v10.71c0 .552.448 1 1 1h13.5a1 1 0 0 0 1-1V6.79l-7.357 4.678a1.25 1.25 0 0 1-1.286 0L4.25 6.79Zm1.1-.735 5.605 3.565 5.605-3.565H5.85Z"/></svg>
-                            Contattami
-                        </a>
                     </div>
                 </div>
             </div>
@@ -479,10 +652,7 @@
                         <h3>Fotografia</h3>
                         <p>Cerco prospettive genuine tra luce naturale, architettura e momenti spontanei, trasformando l’attimo in immagini che restano.</p>
                     </article>
-                    <article class="about-card">
-                        <h3>Spazio digitale</h3>
-                        <p>Curo personalmente questo sito per dare al mio lavoro visivo una cornice pulita, moderna e intuitiva.</p>
-                    </article>
+
                 </div>
             </div>
             <div class="about-footer">
@@ -497,7 +667,7 @@
                 <p>Realizzo servizi fotografici e video che mettono in luce il tuo progetto, il tuo brand o le tue idee. Parliamo dei tuoi prossimi progetti.</p>
                 <a class="hero-button contact-button" href="mailto:noel.minzo@gmail.com" aria-label="Invia email">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.75 6.5C2.75 5.121 3.871 4 5.25 4h13.5c1.379 0 2.5 1.121 2.5 2.5v11c0 1.379-1.121 2.5-2.5 2.5H5.25C3.871 20 2.75 18.879 2.75 17.5v-11Zm1.5.29v10.71c0 .552.448 1 1 1h13.5a1 1 0 0 0 1-1V6.79l-7.357 4.678a1.25 1.25 0 0 1-1.286 0L4.25 6.79Zm1.1-.735 5.605 3.565 5.605-3.565H5.85Z"/></svg>
-                    noel.minzo@gmail.com
+                    Contattami
                 </a>
             </div>
         </section>
@@ -544,16 +714,23 @@
 
                 if (distance > radius) {
                     letter.style.transform = 'translate3d(0, 0, 0) rotateZ(0deg) scale(1)';
+                    letter.style.filter = 'drop-shadow(0 0 8px rgba(107, 141, 217, 0.1))';
                     return;
                 }
 
                 if (distance < 1) distance = 1;
                 const force = (radius - distance) / radius;
-                const moveX = (distX / distance) * force * -40;
-                const moveY = (distY / distance) * force * -40;
-                const rotZ = (distX / radius) * 9;
+                const moveX = (distX / distance) * force * -85;
+                const moveY = (distY / distance) * force * -85;
+                const rotZ = (distX / radius) * 12;
+                const scale = 1 + force * 0.08;
+                
+                // Glow effect intensifies with movement
+                const glowIntensity = force * 0.5;
+                const shadowSize = 4 + force * 24;
+                letter.style.filter = `drop-shadow(0 0 ${shadowSize}px rgba(107, 141, 217, ${0.1 + glowIntensity}))`;
 
-                letter.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateZ(${rotZ}deg) scale(${1 + force * 0.05})`;
+                letter.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateZ(${rotZ}deg) scale(${scale})`;
             });
             rafId = null;
         }
