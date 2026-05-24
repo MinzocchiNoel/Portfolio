@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Noel</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 
         :root {
-            --bg: #f4f5f8;
-            --surface: rgba(255, 255, 255, 0.92);
-            --text: #111;
-            --muted: #555;
-            --accent: #1d1d1f;
-            --accent-soft: #3a6cff;
-            --radius: 28px;
-            --shadow: 0 32px 90px rgba(15, 23, 42, 0.08);
-            color-scheme: light;
+            --dark: #0a0e27;
+            --surface: #151b2f;
+            --surface-light: #1e2644;
+            --text: #f5f5f7;
+            --muted: #a1a1a6;
+            --accent: #ff006e;
+            --accent-alt: #00d9ff;
+            --shadow: 0 32px 90px rgba(0, 0, 0, 0.35);
+            color-scheme: dark;
         }
 
         *, *::before, *::after {
@@ -30,28 +30,44 @@
         body {
             margin: 0;
             min-height: 100%;
-            background: radial-gradient(circle at top, #ffffff 0%, #e8ecf8 55%, #f4f5f8 100%);
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1629 100%);
             color: var(--text);
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            position: relative;
         }
 
         header {
             position: sticky;
             top: 0;
             z-index: 10;
-            backdrop-filter: blur(18px);
-            background: rgba(255, 255, 255, 0.8);
-            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(24px);
+            background: rgba(15, 21, 41, 0.7);
+            border-bottom: 1px solid rgba(255, 0, 110, 0.1);
         }
 
         .topbar {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ff006e, #00d9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
         }
 
         .nav-link {
@@ -59,17 +75,33 @@
             text-decoration: none;
             font-weight: 600;
             transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff006e, #00d9ff);
+            transition: width 0.3s ease;
         }
 
         .nav-link:hover,
         .nav-link:focus-visible {
-            color: var(--accent-soft);
+            color: var(--text);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
         }
 
         main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem 3rem;
+            padding: 0 1.5rem 4rem;
         }
 
         .hero {
@@ -77,49 +109,103 @@
             display: grid;
             place-items: center;
             padding: 5rem 0 3rem;
-            background: radial-gradient(circle at top, rgba(255,255,255,0.98) 0%, rgba(226, 234, 255, 0.25) 48%, rgba(244,245,248,1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 0, 110, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .hero-content {
             width: 100%;
             display: grid;
-            gap: 1.5rem;
+            gap: 2rem;
             text-align: center;
             position: relative;
+            z-index: 1;
             overflow: hidden;
         }
 
         .hero-copy {
-            max-width: 760px;
+            max-width: 780px;
             margin: 0 auto;
         }
 
         .hero-summary {
-            font-size: clamp(1rem, 1.1vw, 1.3rem);
-            color: rgba(17, 17, 17, 0.78);
+            font-size: clamp(1.1rem, 1.15vw, 1.4rem);
+            color: var(--muted);
             margin: 0 auto;
-            max-width: 700px;
+            max-width: 720px;
             line-height: 1.9;
+            letter-spacing: -0.01em;
         }
 
-        .hero-button {
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .hero-button,
+        .contact-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin: 1.5rem auto 0;
-            padding: 0.95rem 1.5rem;
-            border-radius: 999px;
-            background: #1d3b8a;
-            color: #fff;
-            text-decoration: none;
+            padding: 1.1rem 2rem;
+            border-radius: 12px;
+            border: none;
             font-weight: 700;
+            text-decoration: none;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-size: 1rem;
+            cursor: pointer;
         }
 
-        .hero-button:hover,
-        .hero-button:focus-visible {
-            transform: translateY(-2px);
-            box-shadow: 0 18px 36px rgba(29, 59, 138, 0.22);
+        .hero-button {
+            background: linear-gradient(135deg, #ff006e, #ff3885);
+            color: #fff;
+            box-shadow: 0 12px 32px rgba(255, 0, 110, 0.25);
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 48px rgba(255, 0, 110, 0.35);
+        }
+
+        .contact-button {
+            background: linear-gradient(135deg, #00d9ff, #00a8cc);
+            color: var(--dark);
+            box-shadow: 0 12px 32px rgba(0, 217, 255, 0.25);
+        }
+
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 48px rgba(0, 217, 255, 0.35);
         }
 
         .magnetic-text {
@@ -134,7 +220,7 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(32px);
+            transform: translateY(40px);
             transition: opacity 0.8s ease, transform 0.8s ease;
             will-change: opacity, transform;
         }
@@ -149,10 +235,37 @@
             font-size: clamp(6rem, 14vw, 11.5rem);
             font-weight: 900;
             letter-spacing: -0.06em;
-            color: #101025;
+            background: linear-gradient(135deg, #ff006e, #00d9ff, #ff006e);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             white-space: pre;
             will-change: transform;
             transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section {
+            display: grid;
+            gap: 2.5rem;
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, rgba(30, 38, 68, 0.4) 0%, transparent 100%);
+            padding: 5rem 2rem;
+            margin: 0 -1.5rem;
+            border-radius: 24px;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 3vw, 3rem);
+            margin: 0;
+            background: linear-gradient(135deg, var(--text), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .about-grid {
@@ -161,126 +274,162 @@
         }
 
         .about-text {
-            color: rgba(17, 17, 17, 0.84);
+            color: var(--muted);
             max-width: 760px;
-            line-height: 1.85;
+            line-height: 1.9;
         }
 
         .about-list {
             display: grid;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .about-card {
-            background: var(--surface);
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            padding: 1.6rem;
-            border: 1px solid rgba(15, 23, 42, 0.06);
-            color: rgba(17, 17, 17, 0.88);
+            background: var(--surface-light);
+            border-radius: 16px;
+            padding: 1.8rem;
+            border: 1px solid rgba(255, 0, 110, 0.1);
+            color: var(--text);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff006e, #00d9ff);
+        }
+
+        .about-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 0, 110, 0.3);
         }
 
         .about-card h3 {
-            margin: 0 0 0.75rem;
-            font-size: 1.1rem;
+            margin: 0 0 0.85rem;
+            font-size: 1.15rem;
+            color: var(--text);
         }
 
         .about-card p {
             margin: 0;
-            color: rgba(17, 17, 17, 0.76);
+            color: var(--muted);
+            line-height: 1.8;
         }
 
         .about-footer {
-            padding: 1.5rem 0 0;
-            border-top: 1px solid rgba(15, 23, 42, 0.08);
-            color: rgba(17, 17, 17, 0.78);
+            padding: 2rem;
+            background: var(--surface-light);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            border-radius: 16px;
             max-width: 760px;
         }
 
-        .section {
-            display: grid;
-            gap: 2rem;
-            padding: 4rem 0;
+        .about-footer h3 {
+            margin: 0 0 1rem;
+            color: var(--text);
         }
 
-        .section-title {
-            font-size: clamp(2.2rem, 3vw, 3rem);
+        .about-footer p {
             margin: 0;
+            color: var(--muted);
+            line-height: 1.9;
         }
 
         .contact-panel {
             display: grid;
-            gap: 1.25rem;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 32px;
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
-            padding: 2rem;
+            gap: 2rem;
+            background: var(--surface-light);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            padding: 3rem;
             justify-items: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 24px 64px rgba(0, 217, 255, 0.1);
+        }
+
+        .contact-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .contact-panel h2 {
             margin: 0;
-            font-size: clamp(2rem, 2.5vw, 2.5rem);
+            font-size: clamp(2rem, 2.8vw, 2.8rem);
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--text), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .contact-panel p {
             margin: 0;
-            color: rgba(17, 17, 17, 0.78);
+            color: var(--muted);
             max-width: 680px;
-            line-height: 1.8;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
         }
 
         .contact-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            border-radius: 999px;
-            border: none;
-            background: #1d3b8a;
-            color: #fff;
-            font-weight: 700;
-            text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-            padding: 0;
-            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .contact-button svg {
-            width: 1.05rem;
-            height: 1.05rem;
-            fill: currentColor;
-        }
-
-        .contact-button:hover,
-        .contact-button:focus-visible {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(29, 59, 138, 0.22);
-            background: #162f74;
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-right: 0.6rem;
         }
 
         .footer {
-            padding: 1.5rem 0 2rem;
+            padding: 2rem 0;
             display: flex;
             justify-content: center;
-            color: rgba(85, 85, 85, 0.9);
+            color: var(--muted);
             font-size: 0.95rem;
+            border-top: 1px solid rgba(255, 0, 110, 0.1);
         }
 
         @media (max-width: 768px) {
             .topbar {
-                justify-content: center;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
             }
 
             .contact-panel {
-                padding: 1.5rem;
+                padding: 2rem;
             }
 
-            .about-grid {
-                gap: 1.5rem;
+            .hero-buttons {
+                gap: 1rem;
+                flex-direction: column;
+            }
+
+            .hero-button,
+            .contact-button {
+                width: 100%;
             }
         }
     </style>
@@ -288,9 +437,12 @@
 <body>
     <header>
         <div class="topbar">
-            <a class="nav-link" href="#about">Chi sono</a>
-            <a class="nav-link" href="lavori.html">Lavori</a>
-            <a class="nav-link" href="#contact">Contatti</a>
+            <div class="nav-brand">N.</div>
+            <div class="nav-links">
+                <a class="nav-link" href="#about">Chi sono</a>
+                <a class="nav-link" href="lavori.html">Lavori</a>
+                <a class="nav-link" href="#contact">Contatti</a>
+            </div>
         </div>
     </header>
 
@@ -300,7 +452,13 @@
                 <div class="magnetic-text" id="word">PORTFOLIO</div>
                 <div class="hero-copy">
                     <p class="hero-summary">Fotografia e video per raccontare storie visive autentiche. Il mio lavoro è costruire immagini con cura del dettaglio, ritmo e sensibilità narrativa.</p>
-                    <a class="hero-button" href="lavori.html">Guarda i miei lavori</a>
+                    <div class="hero-buttons">
+                        <a class="hero-button" href="lavori.html">Guarda i miei lavori</a>
+                        <a class="hero-button contact-button" href="mailto:noel.minzo@gmail.com" aria-label="Invia email">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.75 6.5C2.75 5.121 3.871 4 5.25 4h13.5c1.379 0 2.5 1.121 2.5 2.5v11c0 1.379-1.121 2.5-2.5 2.5H5.25C3.871 20 2.75 18.879 2.75 17.5v-11Zm1.5.29v10.71c0 .552.448 1 1 1h13.5a1 1 0 0 0 1-1V6.79l-7.357 4.678a1.25 1.25 0 0 1-1.286 0L4.25 6.79Zm1.1-.735 5.605 3.565 5.605-3.565H5.85Z"/></svg>
+                            Contattami
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -335,10 +493,11 @@
 
         <section class="section reveal" id="contact">
             <div class="contact-panel">
-                <h2>Se cerchi fotografia o video, scrivimi.</h2>
-                <p>Realizzo servizi fotografici e video che mettono in luce il tuo progetto, il tuo brand o le tue idee. Contattami per parlare di lavori, collaborazioni o richieste creative.</p>
-                <a class="contact-button" href="mailto:noel.minzo@gmail.com" aria-label="Invia email a Noel">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.75 6.5C2.75 5.121 3.871 4 5.25 4h13.5c1.379 0 2.5 1.121 2.5 2.5v11c0 1.379-1.121 2.5-2.5 2.5H5.25C3.871 20 2.75 18.879 2.75 17.5v-11Zm1.5.29v10.71c0 .552.448 1 1 1h13.5a1 1 0 0 0 1-1V6.79l-7.357 4.678a1.25 1.25 0 0 1-1.286 0L4.25 6.79Zm1.1-.735 5.605 3.565 5.605-3.565H5.85Z"/></svg>
+                <h2>Se cerchi fotografia o video, contattami.</h2>
+                <p>Realizzo servizi fotografici e video che mettono in luce il tuo progetto, il tuo brand o le tue idee. Parliamo dei tuoi prossimi progetti.</p>
+                <a class="hero-button contact-button" href="mailto:noel.minzo@gmail.com" aria-label="Invia email">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.75 6.5C2.75 5.121 3.871 4 5.25 4h13.5c1.379 0 2.5 1.121 2.5 2.5v11c0 1.379-1.121 2.5-2.5 2.5H5.25C3.871 20 2.75 18.879 2.75 17.5v-11Zm1.5.29v10.71c0 .552.448 1 1 1h13.5a1 1 0 0 0 1-1V6.79l-7.357 4.678a1.25 1.25 0 0 1-1.286 0L4.25 6.79Zm1.1-.735 5.605 3.565 5.605-3.565H5.85Z"/></svg>
+                    noel.minzo@gmail.com
                 </a>
             </div>
         </section>
